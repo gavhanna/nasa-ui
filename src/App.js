@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Navigate } from "react-router-dom";
+import "./App.scss";
+import { Home } from "./sections";
+import { APOD } from "./sections";
+import APODArchive from "./sections/APOD/APODArchive";
+import APODPhotoOfTheDay from "./sections/APOD/APODPhotoOfTheDay";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route index element={<Home />} />
+      <Route path="apod" element={<APOD />}>
+        <Route path="" element={<Navigate to="/apod/archive" replace />} />
+        <Route path="archive" element={<APODArchive />} />
+        <Route path=":date" element={<APODPhotoOfTheDay />} />
+      </Route>
+    </Routes>
   );
 }
 
