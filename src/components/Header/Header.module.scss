@@ -1,0 +1,47 @@
+.nav {
+  padding: var(--size-5) 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  img {
+    height: var(--size-8);
+    margin-right: auto;
+  }
+}
+
+.links {
+  display: flex;
+  gap: var(--size-3);
+  font-weight: var(--font-weight-7);
+}
+
+.mainRoutes {
+  font-weight: var(--font-weight-7);
+
+  option {
+    font-weight: inherit;
+  }
+}
+
+.subRoutes {
+  border-right: 2px solid var(--gray-6);
+  margin-right: var(--size-5);
+  padding-right: var(--size-5);
+}
+
+.navLink {
+  color: var(--text-3);
+  &:hover,
+  &:focus,
+  &[aria-current="page"] {
+    color: var(--text-1);
+    text-decoration: underline;
+    text-decoration-color: var(--indigo-1);
+  }
+
+  &[aria-current="page"] {
+    text-decoration-color: var(--indigo-4);
+  }
+}
