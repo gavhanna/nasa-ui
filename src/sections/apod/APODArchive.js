@@ -19,7 +19,7 @@ export default function Archive() {
   const fetchArchiveData = useCallback(async () => {
     setLoading(true);
     const response = await axios.get(
-      `https://api.nasa.gov/planetary/apod?thumbs=true&start_date=${startDate}&end_date=${endDate}&api_key=${process.env.REACT_APP_NASA_API_KEY}`
+      `${process.env.REACT_APP_API_ROOT}/getAPODArchive?start_date=${startDate}&end_date=${endDate}`
     );
     setArchive([...archive, ...response.data.reverse()]);
     setLoading(false);
@@ -27,7 +27,8 @@ export default function Archive() {
 
   useEffect(() => {
     fetchArchiveData();
-  }, [startDate, endDate, fetchArchiveData]);
+    // eslint-disable-next-line
+  }, [startDate, endDate]);
 
   const onLoadMore = () => {
     const newEndDate = dayjs(startDate).subtract(1, "day").format(DATE_FORMAT);

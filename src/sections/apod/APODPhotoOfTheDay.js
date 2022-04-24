@@ -28,14 +28,12 @@ export default function PhotoOfTheDay() {
   const fetchPotd = useCallback(async () => {
     setLoading(true);
     const response = await axios.get(
-      `https://api.nasa.gov/planetary/apod?api_key=${process.env.REACT_APP_NASA_API_KEY}&date=${selectedDate}`
+      `${process.env.REACT_APP_API_ROOT}/getAPOD?date=${selectedDate}`
     );
-    console.log("fetchPotd", selectedDate);
     setPhotoData(response.data);
     setLoading(false);
   }, [selectedDate]);
 
-  // set selectedDate on route param change
   useEffect(() => {
     setSelectedDate(params.date);
   }, [params.date]);
