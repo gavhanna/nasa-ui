@@ -4,9 +4,9 @@ import axios from "axios";
 import { Card } from "../../components";
 import styles from "./APOD.module.scss";
 import cx from "classnames";
+import { DATE_FORMAT } from "./constants";
 
 const ITEMS_PER_PAGE = 9;
-const DATE_FORMAT = "YYYY-MM-DD";
 
 export default function Archive() {
   const [archive, setArchive] = useState([]);

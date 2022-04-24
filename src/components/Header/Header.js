@@ -18,7 +18,8 @@ const Header = ({ sectionRoutes }) => {
   return (
     <nav className={styles.nav}>
       <Link to="/" className="mr-auto">
-        <img src="/assets/NASA_logo.svg" alt="" />
+        {/* <img src="/assets/NASA_logo.svg" alt="" /> */}
+        <i className={cx(styles.logo, "fa-solid fa-robot")}></i>
       </Link>
       {sectionRoutes.length > 0 && (
         <div className={cx(styles.subRoutes, styles.links)}>

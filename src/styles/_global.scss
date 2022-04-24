@@ -32,3 +32,8 @@ button {
   animation: var(--animation-bounce);
   animation-duration: infinite;
 }
+
+h2 {
+  font-weight: var(--font-weight-7);
+  margin-bottom: var(--size-3);
+}

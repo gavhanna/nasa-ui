@@ -1,0 +1,36 @@
+.hero {
+  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  div {
+    flex: 1 1;
+
+    h1 {
+      font-size: 4rem;
+    }
+  }
+
+  img {
+    flex: 1 1;
+    max-height: 400px;
+    max-width: 90vw;
+    object-fit: contain;
+    margin: 0 auto;
+  }
+}
+
+.home {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-5);
+
+  > section {
+    flex: 1 1 400px;
+    width: 100%;
+    border-radius: var(--radius-2);
+    background-color: var(--surface-2);
+    padding: var(--size-4);
+  }
+}
