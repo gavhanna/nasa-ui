@@ -52,7 +52,7 @@
       bottom: 1rem;
       left: 1rem;
       padding: 0.5rem 1rem;
-      background: rgba(49, 49, 50, 0.75);
+      background: var(--surface-2);
       border-radius: 0.5rem;
       font-size: 12px;
       &::before {

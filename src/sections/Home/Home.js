@@ -27,8 +27,8 @@ const Home = () => {
           <h2>Currently Available</h2>
           <ul className="fa-ul">
             <li>
-              <span class="fa-li">
-                <i class="fa-solid fa-sun"></i>
+              <span className="fa-li">
+                <i className="fa-solid fa-sun"></i>
               </span>
               <Link to="/apod">Astronomy Picture of the Day</Link>
             </li>
@@ -38,20 +38,20 @@ const Home = () => {
           <h2>Coming Soon</h2>
           <ul className="fa-ul">
             <li>
-              <span class="fa-li">
-                <i class="fa-solid fa-moon"></i>
+              <span className="fa-li">
+                <i className="fa-solid fa-moon"></i>
               </span>
               Near Earth Objects
             </li>
             <li>
-              <span class="fa-li">
-                <i class="fa-solid fa-moon"></i>
+              <span className="fa-li">
+                <i className="fa-solid fa-moon"></i>
               </span>
               Exoplanet Database
             </li>
             <li>
-              <span class="fa-li">
-                <i class="fa-solid fa-moon"></i>
+              <span className="fa-li">
+                <i className="fa-solid fa-moon"></i>
               </span>
               Mars Weather Service
             </li>

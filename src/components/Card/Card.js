@@ -21,8 +21,8 @@ const Card = ({
 
   const renderMediaTypeIcon = () => {
     if (media_type === "video")
-      return <i class="fa-solid fa-video" title={media_type}></i>;
-    return <i class="fa-solid fa-image" title={media_type}></i>;
+      return <i className="fa-solid fa-video" title={media_type}></i>;
+    return <i className="fa-solid fa-image" title={media_type}></i>;
   };
 
   return (

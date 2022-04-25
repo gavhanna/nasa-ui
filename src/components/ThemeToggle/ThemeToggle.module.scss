@@ -1,0 +1,128 @@
+.sunAndMoon {
+  :is(.moon, .sun, .sunBeams) {
+    transform-origin: center center;
+  }
+
+  :is(.moon, .sun) {
+    fill: var(--icon-fill);
+
+    .themeToggle:is(:hover, :focus-visible) {
+      fill: var(--icon-fill-hover);
+    }
+  }
+
+  .sunBeams {
+    stroke: var(--icon-fill);
+    stroke-width: 2px;
+
+    .themeToggle:is(:hover, :focus-visible) & {
+      stroke: var(--icon-fill-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sun {
+      transition: transform 0.5s var(--ease-elastic-3);
+    }
+
+    .sunBeams {
+      transition: transform 0.5s var(--ease-elastic-4),
+        opacity 0.5s var(--ease-3);
+    }
+
+    & .moon > circle {
+      transition: transform 0.25s var(--ease-out-5);
+
+      @supports (cx: 1) {
+        transition: cx 0.25s var(--ease-out-5);
+      }
+    }
+  }
+}
+
+.themeToggle {
+  --size: 2rem;
+  --icon-fill: hsl(210 10% 30%);
+  --icon-fill-hover: hsl(210 10% 15%);
+
+  background: none;
+  border: none;
+  padding: 0;
+
+  inline-size: var(--size);
+  block-size: var(--size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+
+  outline-offset: 5px;
+
+  svg {
+    inline-size: 100%;
+    block-size: 100%;
+    stroke-linecap: round;
+  }
+
+  @media (hover: none) {
+    --size: 48px;
+  }
+}
+html[data-theme="light"] {
+  .themeToggle {
+    --icon-fill: rgb(79, 79, 79);
+    --icon-fill-hover: rgb(95, 95, 95);
+    color: var(--gray-8);
+
+    &:hover {
+      background-color: var(--gray-3);
+    }
+  }
+}
+
+html[data-theme="dark"] {
+  .themeToggle {
+    --icon-fill: hsl(210 10% 70%);
+    --icon-fill-hover: hsl(210 15% 90%);
+    color: var(--gray-1);
+
+    &:hover {
+      background-color: var(--gray-7);
+    }
+  }
+
+  .sun {
+    transform: scale(1.75);
+  }
+
+  .sunBeams {
+    opacity: 0;
+
+    .sun {
+      transform: scale(1.75);
+      transition-timing-function: var(--ease-3);
+      transition-duration: 0.25s;
+    }
+
+    .sunBeams {
+      transform: rotateZ(-25deg);
+      transition-duration: 0.15s;
+    }
+
+    .moon > circle {
+      transition-delay: 0.25s;
+      transition-duration: 0.5s;
+    }
+  }
+
+  .moon > circle {
+    transform: translateX(-7px);
+
+    @supports (cx: 1) {
+      transform: translateX(0);
+      cx: 17;
+    }
+  }
+}

@@ -90,7 +90,7 @@ export default function PhotoOfTheDay() {
                 type="date"
                 id="datepicker"
                 name="datepicker"
-                value={dayjs(photoData.date).toDate()}
+                value={dayjs(photoData.date).format(DATE_FORMAT)}
                 onChange={onDatePickerChange}
                 min="1995-06-16"
                 max={dayjs().format(DATE_FORMAT)}

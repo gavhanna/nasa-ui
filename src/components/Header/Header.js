@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./Header.module.scss";
 import cx from "classnames";
+import ThemeToggle from "../ThemeToggle";
 
 const Header = ({ sectionRoutes }) => {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ const Header = ({ sectionRoutes }) => {
         <option value="/">Home</option>
         <option value="/apod">APOD</option>
       </select>
+      <ThemeToggle className="ml-3" />
     </nav>
   );
 };
