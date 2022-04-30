@@ -6,6 +6,7 @@ import styles from "./APOD.module.scss";
 import { Link } from "react-router-dom";
 import { DATE_FORMAT } from "./constants";
 import cx from "classnames";
+import Datepicker from "../../components/Datepicker/Datepicker";
 
 export default function PhotoOfTheDay() {
   const navigate = useNavigate();
@@ -86,15 +87,13 @@ export default function PhotoOfTheDay() {
             <p className="mb-5">{photoData.explanation}</p>
 
             <div className={styles["left-bottom"]}>
-              <input
-                type="date"
-                id="datepicker"
-                name="datepicker"
+              <Datepicker
+                id="apod-datepicker"
                 value={dayjs(photoData.date).format(DATE_FORMAT)}
                 onChange={onDatePickerChange}
                 min="1995-06-16"
                 max={dayjs().format(DATE_FORMAT)}
-              ></input>
+              />
               <div className={styles["btn-group"]}>
                 <Link
                   className={styles.btn}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./Header.module.scss";
 import cx from "classnames";
 import ThemeToggle from "../ThemeToggle";
@@ -10,31 +10,44 @@ const Header = ({ sectionRoutes }) => {
   const [selectedMainRoute, setSelectedMainRoute] = useState(
     `/${location.pathname.split("/")[1]}`
   );
+  const [selectedSubRoute, setSelectedSubRoute] = useState("");
 
   const onMainRouteSelect = (e) => {
     navigate(e.target.value);
     setSelectedMainRoute(e.target.value);
   };
 
+  const onSubRouteSelect = (e) => {
+    navigate(e.target.value);
+    setSelectedSubRoute(e.target.value);
+  };
+
   return (
     <nav className={styles.nav}>
       <Link to="/" className="mr-auto">
-        {/* <img src="/assets/NASA_logo.svg" alt="" /> */}
         <i className={cx(styles.logo, "fa-solid fa-robot")}></i>
       </Link>
       {sectionRoutes.length > 0 && (
-        <div className={cx(styles.subRoutes, styles.links)}>
-          {sectionRoutes.map((route, idx) => (
-            <NavLink className={styles.navLink} key={idx} to={route.path}>
-              {route.name}
-            </NavLink>
-          ))}
+        <div className={styles.subRoutes}>
+          <select
+            name="subRoutes"
+            id="subRoutes"
+            className={styles.navSelect}
+            onChange={onSubRouteSelect}
+            value={selectedSubRoute}
+          >
+            {sectionRoutes.map((route, idx) => (
+              <option key={idx} value={route.path}>
+                {route.name}
+              </option>
+            ))}
+          </select>
         </div>
       )}
       <select
         name="mainRoutes"
         id="mainRoutes"
-        className={styles.mainRoutes}
+        className={styles.navSelect}
         onChange={onMainRouteSelect}
         value={selectedMainRoute}
       >

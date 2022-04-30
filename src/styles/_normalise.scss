@@ -107,7 +107,7 @@
   }
 }
 :where(:not(:active)):focus-visible {
-  outline-offset: 5px;
+  outline-offset: 2 px;
 }
 :where(body) {
   scrollbar-gutter: stable both-edges;
@@ -337,7 +337,7 @@
   }
 }
 [data-theme="dark"] {
-  background-color: var(--surface-2);
+  background-color: var(--surface-1);
 }
 :where(dialog)::backdrop {
   backdrop-filter: blur(25px);

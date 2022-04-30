@@ -15,7 +15,7 @@ html {
     color-scheme: dark;
 
     @supports not (color-scheme: dark) {
-      background: #111;
+      background: #212529;
     }
   }
 }

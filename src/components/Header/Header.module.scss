@@ -1,6 +1,5 @@
 .nav {
   padding: var(--size-5) 0;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,14 +14,9 @@
   }
 }
 
-.links {
-  display: flex;
-  gap: var(--size-3);
+.navSelect {
   font-weight: var(--font-weight-7);
-}
-
-.mainRoutes {
-  font-weight: var(--font-weight-7);
+  background-color: var(--surface-2);
 
   option {
     font-weight: inherit;
@@ -30,22 +24,10 @@
 }
 
 .subRoutes {
-  border-right: 2px solid var(--gray-6);
-  margin-right: var(--size-5);
-  padding-right: var(--size-5);
-}
-
-.navLink {
-  color: var(--text-3);
-  &:hover,
-  &:focus,
-  &[aria-current="page"] {
-    color: var(--text-1);
-    text-decoration: underline;
-    text-decoration-color: var(--indigo-1);
-  }
-
-  &[aria-current="page"] {
-    text-decoration-color: var(--indigo-4);
+  &:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f053";
+    padding-inline: var(--size-2);
   }
 }
