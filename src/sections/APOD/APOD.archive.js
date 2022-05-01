@@ -40,6 +40,7 @@ export default function Archive() {
 
   return (
     <React.Fragment>
+      <h2>Archive</h2>
       <p className="mb-3">
         Each day a different image or photograph of our fascinating universe is
         featured, along with a brief explanation written by a professional

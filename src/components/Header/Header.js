@@ -1,61 +1,31 @@
-import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
 import styles from "./Header.module.scss";
 import cx from "classnames";
 import ThemeToggle from "../ThemeToggle";
+import Subnav from "../Subnav/Subnav";
 
 const Header = ({ sectionRoutes }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [selectedMainRoute, setSelectedMainRoute] = useState(
-    `/${location.pathname.split("/")[1]}`
-  );
-  const [selectedSubRoute, setSelectedSubRoute] = useState("");
-
-  const onMainRouteSelect = (e) => {
-    navigate(e.target.value);
-    setSelectedMainRoute(e.target.value);
-  };
-
-  const onSubRouteSelect = (e) => {
-    navigate(e.target.value);
-    setSelectedSubRoute(e.target.value);
-  };
-
   return (
-    <nav className={styles.nav}>
-      <Link to="/" className="mr-auto">
-        <i className={cx(styles.logo, "fa-solid fa-robot")}></i>
-      </Link>
-      {sectionRoutes.length > 0 && (
-        <div className={styles.subRoutes}>
-          <select
-            name="subRoutes"
-            id="subRoutes"
-            className={styles.navSelect}
-            onChange={onSubRouteSelect}
-            value={selectedSubRoute}
-          >
-            {sectionRoutes.map((route, idx) => (
-              <option key={idx} value={route.path}>
-                {route.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-      <select
-        name="mainRoutes"
-        id="mainRoutes"
-        className={styles.navSelect}
-        onChange={onMainRouteSelect}
-        value={selectedMainRoute}
-      >
-        <option value="/">Home</option>
-        <option value="/apod">APOD</option>
-      </select>
-      <ThemeToggle className="ml-3" />
-    </nav>
+    <header className={styles.header}>
+      <nav className={cx(styles.nav, "container")}>
+        <Link to="/" className="mr-auto">
+          <i className={cx(styles.logo, "fa-solid fa-robot")}></i>
+        </Link>
+        <ul className={styles.navLinks}>
+          <li>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/apod" className="hasSectionRoutes">
+              APOD
+            </NavLink>
+          </li>
+        </ul>
+        <ThemeToggle className="ml-3" />
+      </nav>
+      {sectionRoutes.length > 0 && <Subnav sectionRoutes={sectionRoutes} />}
+    </header>
   );
 };
 

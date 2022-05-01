@@ -1,0 +1,33 @@
+.subnav {
+  grid-area: header;
+  background-color: var(--surface-1);
+  padding-block: var(--size-2);
+}
+.subnav ul {
+  font-size: var(--font-size-1);
+  display: flex;
+  align-items: center;
+  gap: var(--size-3);
+  font-weight: var(--font-weight-6);
+  list-style: none;
+  justify-content: flex-end;
+  padding: 0;
+
+  a {
+    color: var(--text-1);
+
+    &:global(.active) {
+      color: var(--indigo-2);
+    }
+
+    &:last-of-type {
+      margin-right: 2.8rem;
+    }
+  }
+}
+
+[data-theme="light"] .subnav {
+  ul a:global(.active) {
+    color: var(--indigo-5);
+  }
+}

@@ -1,8 +1,16 @@
+.header {
+  background-color: var(--surface-1);
+  position: sticky;
+  top: 0;
+  z-index: var(--layer-5);
+}
+
 .nav {
-  padding: var(--size-5) 0;
+  padding: var(--size-2) 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  grid-area: header;
 
   img {
     height: var(--size-8);
@@ -20,6 +28,38 @@
 
   option {
     font-weight: inherit;
+  }
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--size-3);
+  font-weight: var(--font-weight-6);
+  list-style: none;
+
+  a {
+    color: var(--text-1);
+    position: relative;
+
+    &:global(.active) {
+      color: var(--indigo-2);
+      // &:global(.hasSectionRoutes):after {
+      //   font-family: "Font Awesome 5 Free";
+      //   font-weight: 900;
+      //   content: "\f0d7";
+      //   padding-inline: var(--size-2);
+      //   position: absolute;
+      //   left: 25%;
+      //   top: 80%;
+      // }
+    }
+  }
+}
+
+[data-theme="light"] .navLinks {
+  a:global(.active) {
+    color: var(--indigo-5);
   }
 }
 
