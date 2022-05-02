@@ -51,7 +51,7 @@ const Card = ({
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
-  subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  subtitle: PropTypes.string,
   bodyText: PropTypes.string.isRequired,
   linkTo: PropTypes.string,
   imgSrc: PropTypes.string,

@@ -41,7 +41,7 @@ const APODArchive = () => {
 
   const getCardSubtitle = (item) => (
     <React.Fragment>
-      {dayjs(item.date).format(DATE_FORMAT_RENDER)}{" "}
+      {dayjs(item.date).format("MMMM D, YYYY")}{" "}
       {item.copyright && <span>&copy; {item.copyright}</span>}
     </React.Fragment>
   );
@@ -55,8 +55,8 @@ const APODArchive = () => {
         astronomer.
       </p>
       <main className={styles.archive}>
-        {apodArchive &&
-          apodArchive.map((item, idx) => (
+        {archive &&
+          archive.map((item, idx) => (
             <Card
               key={idx}
               bodyText={item.explanation}

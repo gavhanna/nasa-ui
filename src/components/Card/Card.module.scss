@@ -10,7 +10,6 @@
   color: inherit;
 
   &.linkCard {
-    // 20
     &:hover,
     &:focus {
       box-shadow: var(--shadow-3);
@@ -18,7 +17,6 @@
       text-decoration: none;
 
       img {
-        // 1
         transform: scale(1.025);
       }
     }

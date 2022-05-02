@@ -34,8 +34,4 @@ Header.propTypes = {
   sectionRoutes: PropTypes.array,
 };
 
-Header.defaultProps = {
-  sectionRoutes: [],
-};
-
 export default Header;
