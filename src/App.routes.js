@@ -2,8 +2,8 @@ import dayjs from "dayjs";
 import React from "react";
 import { Navigate, Route } from "react-router-dom";
 import { APOD, Home } from "./sections";
-import { APODArchive, APODPhotoOfTheDay } from "./sections/APOD";
-import { DATE_FORMAT } from "./sections/APOD/constants";
+import { APODArchive, APODPhotoOfTheDay } from "./sections/APOD/APOD";
+import { DATE_FORMAT } from "./sections/APOD/APOD.constants";
 
 export const appRoutes = [
   {

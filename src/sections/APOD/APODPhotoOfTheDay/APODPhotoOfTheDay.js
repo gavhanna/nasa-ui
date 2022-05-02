@@ -2,13 +2,13 @@ import React, { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
-import styles from "./APOD.module.scss";
+import styles from "../APOD.module.scss";
 import { Link } from "react-router-dom";
-import { DATE_FORMAT } from "./constants";
+import { DATE_FORMAT } from "../APOD.constants";
 import cx from "classnames";
-import Datepicker from "../../components/Datepicker/Datepicker";
+import Datepicker from "../../../components/Datepicker/Datepicker";
 
-export default function PhotoOfTheDay() {
+const APODPhotoOfTheDay = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [selectedDate, setSelectedDate] = React.useState(params.date);
@@ -126,4 +126,6 @@ export default function PhotoOfTheDay() {
       </main>
     )
   );
-}
+};
+
+export default APODPhotoOfTheDay;

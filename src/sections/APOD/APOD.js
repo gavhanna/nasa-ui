@@ -1,7 +1,7 @@
 import React from "react";
 import { DefaultLayout } from "../../layouts";
 import { Outlet } from "react-router-dom";
-import routes from "./routes";
+import routes from "./APOD.routes";
 
 const APOD = () => {
   return (
@@ -13,5 +13,5 @@ const APOD = () => {
 };
 
 export default APOD;
-export { default as APODArchive } from "./APOD.archive";
-export { default as APODPhotoOfTheDay } from "./APOD.photoOfTheDay";
+export { default as APODArchive } from "./APODArchive/APODArchive";
+export { default as APODPhotoOfTheDay } from "./APODPhotoOfTheDay/APODPhotoOfTheDay";

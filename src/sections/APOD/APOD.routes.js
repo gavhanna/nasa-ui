@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { DATE_FORMAT } from "./constants";
+import { DATE_FORMAT } from "./APOD.constants";
 
 const routes = [
   {
