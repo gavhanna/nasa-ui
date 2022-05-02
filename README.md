@@ -15,6 +15,16 @@ Open source frontend to publically available NASA data via NASA APIs.
 
 ## Project Structure
 
+## Style
+
+This project uses [Open Props](https://open-props.style/) as a replacement for a regular CSS framework. Open Props is self-described as "supercharged CSS variables".
+
 ## Design
 
+[Link to Figma mocks](https://www.figma.com/file/G4d2I7mL1HfzLR7ODEHzL7/NASAde?node-id=216%3A2).
+
 ## Contributing
+
+### Branching Strategy
+
+Please create your branch under the naming convention `user/{username}/{issueNumber}-{brief-description}`

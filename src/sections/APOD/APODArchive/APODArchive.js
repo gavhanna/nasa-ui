@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import axios from "axios";
-import { Card } from "../../components";
-import styles from "./APOD.module.scss";
+import styles from "../APOD.module.scss";
 import cx from "classnames";
-import { DATE_FORMAT } from "./constants";
+import { DATE_FORMAT } from "../APOD.constants";
+import { Card } from "../../../components";
 
 const ITEMS_PER_PAGE = 9;
 
-export default function Archive() {
+const APODArchive = () => {
   const [archive, setArchive] = useState([]);
   const [endDate, setEndDate] = useState(dayjs().format(DATE_FORMAT));
   const [startDate, setStartDate] = useState(
@@ -59,4 +59,6 @@ export default function Archive() {
       </button>
     </React.Fragment>
   );
-}
+};
+
+export default APODArchive;

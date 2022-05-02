@@ -23,7 +23,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "netlify dev",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "check-formatting": "npx prettier --check ."
   },
   "eslintConfig": {
     "extends": [
