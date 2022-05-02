@@ -2,8 +2,9 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./Header.module.scss";
 import cx from "classnames";
-import ThemeToggle from "../ThemeToggle";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import Subnav from "../Subnav/Subnav";
+import PropTypes from "prop-types";
 
 const Header = ({ sectionRoutes }) => {
   return (
@@ -27,6 +28,10 @@ const Header = ({ sectionRoutes }) => {
       {sectionRoutes.length > 0 && <Subnav sectionRoutes={sectionRoutes} />}
     </header>
   );
+};
+
+Header.propTypes = {
+  sectionRoutes: PropTypes.array,
 };
 
 export default Header;

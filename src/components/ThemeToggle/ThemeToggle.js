@@ -1,27 +1,36 @@
+// This is a slightly modified version of this brilliant
+// GUI Challenge theme switcher by Adam Argyle:
+// https://www.youtube.com/watch?v=kZiS1QStIWc
+
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import styles from "./ThemeToggle.module.scss";
 import cx from "classnames";
+import {
+  THEME_TYPE_DARK,
+  THEME_TYPE_LIGHT,
+  THEME_STORAGE_KEY,
+} from "../component.constants";
 
 const ThemeToggle = ({ className: passedClasses, ...props }) => {
-  const storageKey = "theme-preference";
-
   const onClick = () => {
-    theme.value = theme.value === "light" ? "dark" : "light";
+    theme.value =
+      theme.value === THEME_TYPE_LIGHT ? THEME_TYPE_DARK : THEME_TYPE_LIGHT;
 
     setPreference();
   };
 
   const getColorPreference = () => {
-    if (localStorage.getItem(storageKey))
-      return localStorage.getItem(storageKey);
+    if (localStorage.getItem(THEME_STORAGE_KEY))
+      return localStorage.getItem(THEME_STORAGE_KEY);
     else
       return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
+        ? THEME_TYPE_DARK
+        : THEME_TYPE_LIGHT;
   };
 
   const setPreference = () => {
-    localStorage.setItem(storageKey, theme.value);
+    localStorage.setItem(THEME_STORAGE_KEY, theme.value);
     reflectPreference();
   };
 
@@ -41,10 +50,7 @@ const ThemeToggle = ({ className: passedClasses, ...props }) => {
   reflectPreference();
 
   useEffect(() => {
-    window.onload = () => {
-      // set on load so screen readers can see latest value on the button
-      reflectPreference();
-    };
+    reflectPreference();
     // eslint-disable-next-line
   }, []);
 
@@ -52,7 +58,7 @@ const ThemeToggle = ({ className: passedClasses, ...props }) => {
   window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", ({ matches: isDark }) => {
-      theme.value = isDark ? "dark" : "light";
+      theme.value = isDark ? THEME_TYPE_DARK : THEME_TYPE_LIGHT;
       setPreference();
     });
 
@@ -98,6 +104,10 @@ const ThemeToggle = ({ className: passedClasses, ...props }) => {
       </svg>
     </button>
   );
+};
+
+ThemeToggle.propTypes = {
+  className: PropTypes.string,
 };
 
 export default ThemeToggle;
