@@ -38,6 +38,13 @@ const APODArchive = () => {
     );
   };
 
+  const getCardSubtitle = (item) => (
+    <React.Fragment>
+      {dayjs(item.date).format("MMMM D, YYYY")}{" "}
+      {item.copyright && <span>&copy; {item.copyright}</span>}
+    </React.Fragment>
+  );
+
   return (
     <React.Fragment>
       <h2>Archive</h2>
@@ -47,7 +54,19 @@ const APODArchive = () => {
         astronomer.
       </p>
       <main className={styles.archive}>
-        {archive && archive.map((item, idx) => <Card key={idx} {...item} />)}
+        {archive &&
+          archive.map((item, idx) => (
+            <Card
+              key={idx}
+              bodyText={item.explanation}
+              title={item.title}
+              linkTo={`/apod/${item.date}`}
+              imgSrc={item.thumbnail_url || item.url || item.hdurl}
+              limitDescriptionTo={20}
+              subtitle={getCardSubtitle(item)}
+              mediaType={item.media_type}
+            />
+          ))}
       </main>
       <button
         className={cx(styles.loadMore, "mx-auto my-3")}

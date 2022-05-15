@@ -15,11 +15,7 @@ const Home = () => {
             data, images and information.
           </p>
         </div>
-        <img
-          src="/assets/undraw_stars_re_6je7.svg"
-          alt=""
-          role="presentation"
-        />
+        <img src="/assets/landing-hero.jpg" alt="" role="presentation" />
       </section>
       <hr />
       <main className={styles.home}>

@@ -21,6 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "dev": "netlify dev",
     "prepare": "husky install",
@@ -53,5 +54,11 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/components/**/*.js",
+      "!**/node_modules/**"
+    ]
   }
 }
