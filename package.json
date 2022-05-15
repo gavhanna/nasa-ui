@@ -20,7 +20,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage",
+    "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "dev": "netlify dev",
     "prepare": "husky install",
@@ -56,10 +57,8 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!**/node_modules/**",
-      "!**/layouts/**",
-      "!**/sections/**"
+      "src/components/**/*.js",
+      "!**/node_modules/**"
     ]
   }
 }

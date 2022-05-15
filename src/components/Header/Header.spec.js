@@ -1,4 +1,4 @@
-import React from "react";
+import "../../utils/matchMedia.mock";
 import { render } from "@testing-library/react";
 import Header from "./Header";
 
