@@ -1,7 +1,5 @@
 #root {
   min-height: 100vh;
-  // width: var(--size-xl);
-  // max-width: 95%;
   margin: 0 auto;
 }
 
@@ -16,12 +14,14 @@
 
 .pageContent {
   grid-area: main;
+  margin-block-end: 5rem;
+  margin-inline: auto;
 }
 
 .container {
   width: var(--size-xl);
-  max-width: 95vw;
-  margin: 0 auto;
+  max-width: 90vw;
+  margin-inline: auto;
 }
 
 html {
@@ -44,18 +44,6 @@ html {
 select {
   appearance: none;
   padding-inline: 1.25ch;
-}
-
-button {
-  padding-inline: var(--size-2);
-  padding-block: var(--size-1);
-  border-radius: var(--radius-1);
-  background-color: var(--indigo-2);
-  color: var(--gray-9);
-
-  &:hover {
-    background-color: var(--indigo-3);
-  }
 }
 
 .shake {
