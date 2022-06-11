@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import dayjs from "dayjs";
-import styles from "../APOD.module.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchApod, reset } from "../../../features/APOD/apodSlice";
 import { Link } from "react-router-dom";
 import { DATE_FORMAT } from "../APOD.constants";
+import dayjs from "dayjs";
+import styles from "../APOD.module.scss";
 import cx from "classnames";
 import Datepicker from "../../../components/Datepicker/Datepicker";
 
@@ -12,8 +13,9 @@ const APODPhotoOfTheDay = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [selectedDate, setSelectedDate] = React.useState(params.date);
-  const [photoData, setPhotoData] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
+  const dispatch = useDispatch();
+
+  const { apod, isLoading } = useSelector((state) => state.apod);
 
   const isValidDate = (date) => {
     const dateObj = dayjs(date);
@@ -22,19 +24,17 @@ const APODPhotoOfTheDay = () => {
 
   const onDatePickerChange = (e) => {
     const newDate = dayjs(e.target.value).format(DATE_FORMAT);
-    console.log(newDate);
     setSelectedDate(newDate);
     navigate(`/apod/${newDate}`);
   };
 
   const fetchPotd = useCallback(async () => {
-    setLoading(true);
-    const response = await axios.get(
-      `${process.env.REACT_APP_API_ROOT}/getAPOD?date=${selectedDate}`
-    );
-    setPhotoData(response.data);
-    setLoading(false);
-  }, [selectedDate]);
+    dispatch(fetchApod(selectedDate));
+
+    return () => {
+      dispatch(reset());
+    };
+  }, [selectedDate, dispatch]);
 
   useEffect(() => {
     setSelectedDate(params.date);
@@ -45,13 +45,13 @@ const APODPhotoOfTheDay = () => {
   }, [selectedDate, fetchPotd]);
 
   const renderMedia = () => {
-    if (photoData.media_type === "video") {
+    if (apod.media_type === "video") {
       return (
         <div className={styles.videoWrapper}>
           <div className={styles.embedContainer}>
             <iframe
-              title={photoData.title}
-              src={photoData.url}
+              title={apod.title}
+              src={apod.url}
               frameBorder="0"
               allowFullScreen
             ></iframe>
@@ -59,37 +59,31 @@ const APODPhotoOfTheDay = () => {
         </div>
       );
     } else {
-      return (
-        <img
-          src={photoData.url}
-          alt={photoData.title}
-          className={styles.image}
-        />
-      );
+      return <img src={apod.url} alt={apod.title} className={styles.image} />;
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return <div>isLoading...</div>;
   }
 
   return (
-    photoData && (
+    apod && (
       <main>
         <div className={styles.apod}>
           <div className={styles.right}>
             {renderMedia()}
-            {photoData.copyright && <aside>{photoData.copyright}</aside>}
+            {apod.copyright && <aside>{apod.copyright}</aside>}
           </div>
 
           <div className={styles.left}>
-            <h2>{photoData.title}</h2>
-            <p className="mb-5">{photoData.explanation}</p>
+            <h2>{apod.title}</h2>
+            <p className="mb-5">{apod.explanation}</p>
 
             <div className={styles["left-bottom"]}>
               <Datepicker
                 id="apod-datepicker"
-                value={dayjs(photoData.date).format(DATE_FORMAT)}
+                value={dayjs(apod.date).format(DATE_FORMAT)}
                 onChange={onDatePickerChange}
                 min="1995-06-16"
                 max={dayjs().format(DATE_FORMAT)}
