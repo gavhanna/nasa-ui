@@ -8,16 +8,26 @@ import {
   MEDIA_TYPE_VIDEO,
   OLDEST_AVAILABLE_DATE,
 } from "../APOD.constants";
+import { Gallery, Item } from "react-photoswipe-gallery";
+import "photoswipe/dist/photoswipe.css";
 import dayjs from "dayjs";
 import styles from "../APOD.module.scss";
 import Datepicker from "../../../components/Datepicker/Datepicker";
 import { Button } from "../../../components";
+
+const photoswipeOptions = {
+  wheelToZoom: true,
+};
 
 const APODPhotoOfTheDay = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [selectedDate, setSelectedDate] = React.useState(params.date);
   const dispatch = useDispatch();
+  const [imageDimensions, setImageDimensions] = React.useState({
+    width: 0,
+    height: 0,
+  });
 
   const { apod, isLoading } = useSelector((state) => state.apod);
 
@@ -37,6 +47,7 @@ const APODPhotoOfTheDay = () => {
 
     return () => {
       dispatch(reset());
+      setImageDimensions({ width: 0, height: 0 });
     };
   }, [selectedDate, dispatch]);
 
@@ -47,6 +58,15 @@ const APODPhotoOfTheDay = () => {
   useEffect(() => {
     fetchPotd();
   }, [selectedDate, fetchPotd]);
+
+  const onImgLoad = ({ target: img }) => {
+    const { naturalHeight, naturalWidth } = img;
+    console.log(naturalHeight, naturalWidth);
+    setImageDimensions({
+      width: naturalWidth,
+      height: naturalHeight,
+    });
+  };
 
   const renderMedia = () => {
     if (apod.media_type === MEDIA_TYPE_VIDEO) {
@@ -63,7 +83,27 @@ const APODPhotoOfTheDay = () => {
         </div>
       );
     } else {
-      return <img src={apod.url} alt={apod.title} className={styles.image} />;
+      return (
+        <Gallery options={photoswipeOptions}>
+          <Item
+            original={apod.hdurl || apod.url}
+            thumbnail={apod.url}
+            width={imageDimensions.width}
+            height={imageDimensions.height}
+          >
+            {({ ref, open }) => (
+              <img
+                onLoad={onImgLoad}
+                ref={ref}
+                onClick={open}
+                src={apod.url}
+                alt={apod.title}
+                className={styles.image}
+              />
+            )}
+          </Item>
+        </Gallery>
+      );
     }
   };
 
@@ -116,32 +156,6 @@ const APODPhotoOfTheDay = () => {
                   }
                 ></Button>
               </div>
-              {/* <div className={styles["btn-group"]}>
-                <Link
-                  className={styles.btn}
-                  to={`/apod/${dayjs(selectedDate)
-                    .subtract(1, STR_DAY)
-                    .format(DATE_FORMAT)}`}
-                >
-                  <i className="fas fa-chevron-left"></i>
-                </Link>
-
-                <Link
-                  to={`/apod/${dayjs(selectedDate)
-                    .add(1, STR_DAY)
-                    .format(DATE_FORMAT)}`}
-                  className={cx(
-                    styles.btn,
-                    !isValidDate(
-                      dayjs(selectedDate).add(1, STR_DAY).format(DATE_FORMAT)
-                    )
-                      ? styles.disabled
-                      : null
-                  )}
-                >
-                  <i className="fas fa-chevron-right"></i>
-                </Link>
-              </div> */}
             </div>
           </div>
         </div>
