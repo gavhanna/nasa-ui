@@ -11,7 +11,7 @@ const fetchApod = async (selectedDate) => {
 const fetchArchiveItems = async ({ startDate, endDate }) => {
   console.log("fetchArchiveItems", startDate, endDate);
   const response = await axios.get(
-    `${process.env.REACT_APP_API_ROOT}/getAPODArchive?start_date=${startDate}&end_date=${endDate}`
+    `${process.env.REACT_APP_API_ROOT}/getAPODArchive?thumbs=True&start_date=${startDate}&end_date=${endDate}`
   );
 
   return response.data;

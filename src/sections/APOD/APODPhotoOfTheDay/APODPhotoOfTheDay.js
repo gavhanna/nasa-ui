@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchApod, reset } from "../../../features/APOD/apodSlice";
-import { Link } from "react-router-dom";
 import {
   DATE_FORMAT,
   STR_DAY,
@@ -11,8 +10,8 @@ import {
 } from "../APOD.constants";
 import dayjs from "dayjs";
 import styles from "../APOD.module.scss";
-import cx from "classnames";
 import Datepicker from "../../../components/Datepicker/Datepicker";
+import { Button } from "../../../components";
 
 const APODPhotoOfTheDay = () => {
   const navigate = useNavigate();
@@ -94,6 +93,30 @@ const APODPhotoOfTheDay = () => {
                 max={dayjs().format(DATE_FORMAT)}
               />
               <div className={styles["btn-group"]}>
+                <Button
+                  large
+                  rounded
+                  to={`/apod/${dayjs(selectedDate)
+                    .subtract(1, STR_DAY)
+                    .format(DATE_FORMAT)}`}
+                  content={<i className="fas fa-chevron-left"></i>}
+                ></Button>
+
+                <Button
+                  large
+                  rounded
+                  to={`/apod/${dayjs(selectedDate)
+                    .add(1, STR_DAY)
+                    .format(DATE_FORMAT)}`}
+                  content={<i className="fas fa-chevron-right"></i>}
+                  disabled={
+                    !isValidDate(
+                      dayjs(selectedDate).add(1, STR_DAY).format(DATE_FORMAT)
+                    )
+                  }
+                ></Button>
+              </div>
+              {/* <div className={styles["btn-group"]}>
                 <Link
                   className={styles.btn}
                   to={`/apod/${dayjs(selectedDate)
@@ -118,7 +141,7 @@ const APODPhotoOfTheDay = () => {
                 >
                   <i className="fas fa-chevron-right"></i>
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -5,9 +5,9 @@ import {
   STR_DAY,
   DATE_FORMAT_RENDER,
 } from "../APOD.constants";
-import { Card } from "../../../components";
+import { Button, Card } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchArchiveItems, reset } from "../../../features/APOD/apodSlice";
+import { fetchArchiveItems } from "../../../features/APOD/apodSlice";
 import dayjs from "dayjs";
 import styles from "../APOD.module.scss";
 import cx from "classnames";
@@ -69,14 +69,14 @@ const APODArchive = () => {
             />
           ))}
       </main>
-      <button
-        className={cx(styles.loadMore, "mx-auto my-3")}
-        onClick={onLoadMore}
-        disabled={isLoading}
-      >
-        <i className={cx("fa-solid fa-rocket mr-2", isLoading && "shake")}></i>
-        {isLoading ? "Loading..." : "Load More"}
-      </button>
+      <div className={cx(styles.loadMore, "mx-auto my-6")}>
+        <Button
+          onClick={onLoadMore}
+          disabled={isLoading}
+          content={isLoading ? "Loading..." : "Load More"}
+          icon="fa-solid fa-rocket"
+        />
+      </div>
     </React.Fragment>
   );
 };
