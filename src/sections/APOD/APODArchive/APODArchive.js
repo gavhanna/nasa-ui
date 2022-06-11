@@ -1,46 +1,47 @@
 import React, { useCallback, useEffect, useState } from "react";
+import {
+  DATE_FORMAT,
+  ITEMS_PER_PAGE,
+  STR_DAY,
+  DATE_FORMAT_RENDER,
+} from "../APOD.constants";
+import { Card } from "../../../components";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchArchiveItems, reset } from "../../../features/APOD/apodSlice";
 import dayjs from "dayjs";
-import axios from "axios";
 import styles from "../APOD.module.scss";
 import cx from "classnames";
-import { DATE_FORMAT } from "../APOD.constants";
-import { Card } from "../../../components";
-
-const ITEMS_PER_PAGE = 9;
 
 const APODArchive = () => {
-  const [archive, setArchive] = useState([]);
   const [endDate, setEndDate] = useState(dayjs().format(DATE_FORMAT));
   const [startDate, setStartDate] = useState(
-    dayjs().subtract(ITEMS_PER_PAGE, "day").format(DATE_FORMAT)
+    dayjs().subtract(ITEMS_PER_PAGE, STR_DAY).format(DATE_FORMAT)
   );
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  const { apodArchive, isLoading } = useSelector((state) => state.apod);
 
   const fetchArchiveData = useCallback(async () => {
-    setLoading(true);
-    const response = await axios.get(
-      `${process.env.REACT_APP_API_ROOT}/getAPODArchive?start_date=${startDate}&end_date=${endDate}`
-    );
-    setArchive([...archive, ...response.data.reverse()]);
-    setLoading(false);
-  }, [startDate, endDate, archive]);
+    dispatch(fetchArchiveItems({ startDate, endDate }));
+  }, [startDate, endDate, dispatch]);
 
   useEffect(() => {
     fetchArchiveData();
-    // eslint-disable-next-line
-  }, [startDate, endDate]);
+  }, [startDate, fetchArchiveData, dispatch]);
 
   const onLoadMore = () => {
-    const newEndDate = dayjs(startDate).subtract(1, "day").format(DATE_FORMAT);
+    const newEndDate = dayjs(startDate)
+      .subtract(1, STR_DAY)
+      .format(DATE_FORMAT);
     setEndDate(newEndDate);
     setStartDate(
-      dayjs(newEndDate).subtract(ITEMS_PER_PAGE, "day").format(DATE_FORMAT)
+      dayjs(newEndDate).subtract(ITEMS_PER_PAGE, STR_DAY).format(DATE_FORMAT)
     );
   };
 
   const getCardSubtitle = (item) => (
     <React.Fragment>
-      {dayjs(item.date).format("MMMM D, YYYY")}{" "}
+      {dayjs(item.date).format(DATE_FORMAT_RENDER)}{" "}
       {item.copyright && <span>&copy; {item.copyright}</span>}
     </React.Fragment>
   );
@@ -54,8 +55,8 @@ const APODArchive = () => {
         astronomer.
       </p>
       <main className={styles.archive}>
-        {archive &&
-          archive.map((item, idx) => (
+        {apodArchive &&
+          apodArchive.map((item, idx) => (
             <Card
               key={idx}
               bodyText={item.explanation}
@@ -71,10 +72,10 @@ const APODArchive = () => {
       <button
         className={cx(styles.loadMore, "mx-auto my-3")}
         onClick={onLoadMore}
-        disabled={loading}
+        disabled={isLoading}
       >
-        <i className={cx("fa-solid fa-rocket mr-2", loading && "shake")}></i>
-        {loading ? "Loading..." : "Load More"}
+        <i className={cx("fa-solid fa-rocket mr-2", isLoading && "shake")}></i>
+        {isLoading ? "Loading..." : "Load More"}
       </button>
     </React.Fragment>
   );
