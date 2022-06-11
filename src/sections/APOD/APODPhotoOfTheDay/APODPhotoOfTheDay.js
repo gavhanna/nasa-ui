@@ -8,6 +8,8 @@ import {
   MEDIA_TYPE_VIDEO,
   OLDEST_AVAILABLE_DATE,
 } from "../APOD.constants";
+import { Gallery, Item } from "react-photoswipe-gallery";
+import "photoswipe/dist/photoswipe.css";
 import dayjs from "dayjs";
 import styles from "../APOD.module.scss";
 import Datepicker from "../../../components/Datepicker/Datepicker";
@@ -18,6 +20,10 @@ const APODPhotoOfTheDay = () => {
   const params = useParams();
   const [selectedDate, setSelectedDate] = React.useState(params.date);
   const dispatch = useDispatch();
+  const [imageDimensions, setImageDimensions] = React.useState({
+    width: 0,
+    height: 0,
+  });
 
   const { apod, isLoading } = useSelector((state) => state.apod);
 
@@ -37,6 +43,7 @@ const APODPhotoOfTheDay = () => {
 
     return () => {
       dispatch(reset());
+      setImageDimensions({ width: 0, height: 0 });
     };
   }, [selectedDate, dispatch]);
 
@@ -47,6 +54,15 @@ const APODPhotoOfTheDay = () => {
   useEffect(() => {
     fetchPotd();
   }, [selectedDate, fetchPotd]);
+
+  const onImgLoad = ({ target: img }) => {
+    const { naturalHeight, naturalWidth } = img;
+    console.log(naturalHeight, naturalWidth);
+    setImageDimensions({
+      width: naturalWidth,
+      height: naturalHeight,
+    });
+  };
 
   const renderMedia = () => {
     if (apod.media_type === MEDIA_TYPE_VIDEO) {
@@ -63,7 +79,27 @@ const APODPhotoOfTheDay = () => {
         </div>
       );
     } else {
-      return <img src={apod.url} alt={apod.title} className={styles.image} />;
+      return (
+        <Gallery>
+          <Item
+            original={apod.url}
+            thumbnail={apod.url}
+            width={imageDimensions.width}
+            height={imageDimensions.height}
+          >
+            {({ ref, open }) => (
+              <img
+                onLoad={onImgLoad}
+                ref={ref}
+                onClick={open}
+                src={apod.url}
+                alt={apod.title}
+                className={styles.image}
+              />
+            )}
+          </Item>
+        </Gallery>
+      );
     }
   };
 
