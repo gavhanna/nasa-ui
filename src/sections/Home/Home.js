@@ -15,7 +15,7 @@ const Home = () => {
             data, images and information.
           </p>
         </div>
-        <img src="/assets/landing-hero.jpg" alt="" role="presentation" />
+        <img src="/assets/moon.png" alt="" role="presentation" />
       </section>
       <hr />
       <main className={styles.home}>

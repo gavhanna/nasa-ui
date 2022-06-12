@@ -1,24 +1,40 @@
+@use "../../styles/utils/breakpoints";
+
 .hero {
   display: grid;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  padding-block: 5rem;
+  // padding-block: 5rem;
+  border-radius: var(--radius-2);
+  background: var(--gradient-23);
+  padding-inline-start: var(--size-6);
+  color: var(--gray-2);
 
   div {
     flex: 1 1;
-
     h1 {
-      font-size: 4rem;
+      color: inherit;
+      font-size: 6rem;
     }
+  }
+
+  p {
+    max-width: 40ch;
+    font-weight: var(--font-weight-5);
   }
 
   img {
     flex: 1 1;
     max-height: 400px;
-    max-width: 90vw;
-    object-fit: contain;
+    max-width: 80vw;
+    object-fit: cover;
     margin: 0 auto;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background: var(--gradient-6);
+    color: var(--gray-9);
   }
 }
 
@@ -33,5 +49,36 @@
     border-radius: var(--radius-2);
     background-color: var(--surface-2);
     padding: var(--size-4);
+  }
+}
+
+[data-theme="dark"] {
+  .hero {
+    background: var(--gradient-6);
+    color: var(--gray-9);
+    background-color: var(--surface-1);
+  }
+}
+@media screen and (max-width: breakpoints.$md) {
+  .hero {
+    padding-inline: 0;
+    padding-block-start: var(--size-4);
+    overflow: hidden;
+
+    h1 {
+      font-size: 4rem;
+    }
+
+    img {
+      object-fit: none;
+      object-position: top;
+      max-width: 100%;
+      max-height: 200px;
+      margin-block-start: var(--size-4);
+    }
+
+    > div {
+      padding-inline: var(--size-4);
+    }
   }
 }

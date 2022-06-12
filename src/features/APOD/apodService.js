@@ -2,7 +2,7 @@ import axios from "axios";
 
 const fetchApod = async (selectedDate) => {
   const response = await axios.get(
-    `${process.env.REACT_APP_API_ROOT}/getAPOD?date=${selectedDate}`
+    `${process.env.REACT_APP_API_ROOT}/getAPOD?thumbs=True&date=${selectedDate}`
   );
 
   return response.data;
@@ -23,4 +23,3 @@ const apodService = {
 };
 
 export default apodService;
-// Compare this snippet from src\features\APOD\apodSlice.js:

@@ -49,11 +49,6 @@ const ThemeToggle = ({ className: passedClasses, ...props }) => {
   // set early so no page flashes / CSS is made aware
   reflectPreference();
 
-  useEffect(() => {
-    reflectPreference();
-    // eslint-disable-next-line
-  }, []);
-
   // sync with system changes
   window
     .matchMedia("(prefers-color-scheme: dark)")
