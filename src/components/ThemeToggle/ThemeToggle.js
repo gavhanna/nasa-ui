@@ -2,7 +2,7 @@
 // GUI Challenge theme switcher by Adam Argyle:
 // https://www.youtube.com/watch?v=kZiS1QStIWc
 
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styles from "./ThemeToggle.module.scss";
 import cx from "classnames";

@@ -81,7 +81,7 @@ export const apodSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchArchiveItems.fulfilled, (state, action) => {
-        state.apodArchive = [...state.apodArchive, ...action.payload];
+        state.apodArchive = [...state.apodArchive, ...action.payload.reverse()];
         state.isLoading = false;
         state.isSuccess = true;
         state.message = "Success";
