@@ -1,11 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useMemo,
-  Fragment,
-} from "react";
+import React, { useCallback, useEffect, useMemo, Fragment } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchApod, reset } from "../../../features/APOD/apodSlice";
@@ -19,10 +12,7 @@ import { Gallery, Item } from "react-photoswipe-gallery";
 import "photoswipe/dist/photoswipe.css";
 import dayjs from "dayjs";
 import styles from "../APOD.module.scss";
-import Datepicker from "../../../components/Datepicker/Datepicker";
-import { Button } from "../../../components";
-import { toast } from "react-toastify";
-import cx from "classnames";
+import { Datepicker, SwipeContainer, Button } from "../../../components";
 
 const photoswipeOptions = {
   wheelToZoom: true,
@@ -33,16 +23,29 @@ const APODPhotoOfTheDay = () => {
   const params = useParams();
   const [selectedDate, setSelectedDate] = React.useState(params.date);
   const dispatch = useDispatch();
-  const mainRef = useRef();
-  const indicatorContainer = useRef();
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchDistance, setTouchDistance] = useState(0);
   const [imageDimensions, setImageDimensions] = React.useState({
     width: 0,
     height: 0,
   });
 
   const { apod, isLoading } = useSelector((state) => state.apod);
+
+  useEffect(() => {
+    setSelectedDate(params.date);
+  }, [params.date]);
+
+  const fetchPotd = useCallback(async () => {
+    dispatch(fetchApod(selectedDate));
+
+    return () => {
+      dispatch(reset());
+      setImageDimensions({ width: 0, height: 0 });
+    };
+  }, [selectedDate, dispatch]);
+
+  useEffect(() => {
+    fetchPotd();
+  }, [selectedDate, fetchPotd]);
 
   const isValidDate = (date) => {
     const dateObj = dayjs(date);
@@ -63,22 +66,8 @@ const APODPhotoOfTheDay = () => {
     return dayjs(selectedDate).subtract(1, STR_DAY).format(DATE_FORMAT);
   }, [selectedDate]);
 
-  const fetchPotd = useCallback(async () => {
-    dispatch(fetchApod(selectedDate));
-
-    return () => {
-      dispatch(reset());
-      setImageDimensions({ width: 0, height: 0 });
-    };
-  }, [selectedDate, dispatch]);
-
-  useEffect(() => {
-    setSelectedDate(params.date);
-  }, [params.date]);
-
-  useEffect(() => {
-    fetchPotd();
-  }, [selectedDate, fetchPotd]);
+  const canSwipeLeft = useMemo(() => isValidDate(prevDay), [prevDay]);
+  const canSwipeRight = useMemo(() => isValidDate(nextDay), [nextDay]);
 
   const onImgLoad = ({ target: img }) => {
     const { naturalHeight, naturalWidth } = img;
@@ -86,6 +75,14 @@ const APODPhotoOfTheDay = () => {
       width: naturalWidth,
       height: naturalHeight,
     });
+  };
+
+  const onSwipeRight = () => {
+    navigate(`/apod/${nextDay}`);
+  };
+
+  const onSwipeLeft = () => {
+    navigate(`/apod/${prevDay}`);
   };
 
   const renderMedia = () => {
@@ -127,44 +124,6 @@ const APODPhotoOfTheDay = () => {
     }
   };
 
-  const onTouchStart = (e) => {
-    setTouchStart(e.touches[0].clientX);
-  };
-
-  const onTouchEnd = (e) => {
-    if (Math.abs(touchDistance) > window.innerWidth * 0.3) {
-      if (touchDistance > 0) {
-        navigate(`/apod/${prevDay}`);
-      } else {
-        if (isValidDate(nextDay)) {
-          navigate(`/apod/${nextDay}`);
-        } else {
-          toast.info("You are already viewing the latest photo!");
-        }
-      }
-    }
-    mainRef.current.style.transform = `translateX(0px)`;
-  };
-
-  const onTouchMove = (e) => {
-    // the lower value prevents the screen from wobbling when
-    // the user scrolls vertically on mobile
-    // with some slight left/right movements
-    if (
-      Math.abs(touchDistance) > window.innerWidth * 0.02 &&
-      Math.abs(touchDistance) < window.innerWidth * 0.25
-    ) {
-      mainRef.current.style.transform = `translateX(${
-        e.touches[0].clientX - touchStart
-      }px)`;
-    }
-    setTouchDistance(e.touches[0].clientX - touchStart);
-
-    // increase indicator opacity based on percentage of screen swiped
-    const percentage = Math.abs(touchDistance) / window.innerWidth;
-    indicatorContainer.current.style.opacity = percentage;
-  };
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -172,23 +131,12 @@ const APODPhotoOfTheDay = () => {
   return (
     apod && (
       <Fragment>
-        <div
-          ref={indicatorContainer}
-          className={cx("container", styles.swipeIndicators)}
-        >
-          <i className="fas fa-arrow-left"></i>
-          {isValidDate(nextDay) ? (
-            <i className="fas fa-arrow-right"></i>
-          ) : (
-            <i className="fa-solid fa-xmark"></i>
-          )}
-        </div>
-        <main
+        <SwipeContainer
           className={styles.apodMain}
-          ref={mainRef}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-          onTouchMove={onTouchMove}
+          onSwipeRight={onSwipeRight}
+          onSwipeLeft={onSwipeLeft}
+          canSwipeLeft={canSwipeLeft}
+          canSwipeRight={canSwipeRight}
         >
           <div className={styles.apod}>
             <div className={styles.right}>
@@ -233,7 +181,7 @@ const APODPhotoOfTheDay = () => {
               </div>
             </div>
           </div>
-        </main>
+        </SwipeContainer>
       </Fragment>
     )
   );
