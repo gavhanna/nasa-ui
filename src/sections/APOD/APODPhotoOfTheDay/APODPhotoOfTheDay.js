@@ -12,7 +12,12 @@ import { Gallery, Item } from "react-photoswipe-gallery";
 import "photoswipe/dist/photoswipe.css";
 import dayjs from "dayjs";
 import styles from "../APOD.module.scss";
-import { Datepicker, SwipeContainer, Button } from "../../../components";
+import {
+  Datepicker,
+  SwipeContainer,
+  Button,
+  Spinner,
+} from "../../../components";
 
 const photoswipeOptions = {
   wheelToZoom: true,
@@ -125,7 +130,7 @@ const APODPhotoOfTheDay = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   return (
