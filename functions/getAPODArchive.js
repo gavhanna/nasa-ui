@@ -3,7 +3,7 @@ const axios = require("axios");
 exports.handler = async function (event, context) {
   try {
     const response = await axios.get(
-      `${process.env.NETLIFY_NASA_ROOT}/planetary/apod?api_key=${process.env.NETLIFY_NASA_API_KEY}&start_date=${event.queryStringParameters.start_date}&end_date=${event.queryStringParameters.end_date}`
+      `${process.env.NETLIFY_NASA_ROOT}/planetary/apod?thumbs=True&api_key=${process.env.NETLIFY_NASA_API_KEY}&start_date=${event.queryStringParameters.start_date}&end_date=${event.queryStringParameters.end_date}`
     );
     return {
       statusCode: 200,
