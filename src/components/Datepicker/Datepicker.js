@@ -1,17 +1,13 @@
-import React, { useCallback } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 
 const Datepicker = ({ value, min, max, onChange, id }) => {
-  const _onChange = useCallback(
-    (date) => {
-      if (!isValidDate(date)) return;
-      onChange(date);
-    },
-    [onChange]
-  );
-
-  const isValidDate = (date) => dayjs(date).isValid();
+  const _onChange = ({ target }) => {
+    const newDate = target.value;
+    if (!dayjs(newDate).isValid()) return;
+    onChange(newDate);
+  };
 
   return (
     <input
