@@ -57,8 +57,7 @@ const APODPhotoOfTheDay = () => {
     return dateObj.isValid() && dateObj.isBefore(dayjs());
   };
 
-  const onDatePickerChange = (e) => {
-    const newDate = dayjs(e.target.value).format(DATE_FORMAT);
+  const onDatePickerChange = (newDate) => {
     setSelectedDate(newDate);
     navigate(`/apod/${newDate}`);
   };
