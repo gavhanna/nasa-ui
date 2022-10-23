@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
+import dayjs from "dayjs";
 
 const Datepicker = ({ value, min, max, onChange, id }) => {
+  const _onChange = useCallback(
+    (date) => {
+      if (!isValidDate(date)) return;
+      onChange(date);
+    },
+    [onChange]
+  );
+
+  const isValidDate = (date) => dayjs(date).isValid();
+
   return (
     <input
       type="date"
@@ -9,8 +20,9 @@ const Datepicker = ({ value, min, max, onChange, id }) => {
       min={min}
       id={id}
       value={value}
-      onChange={onChange}
+      onChange={_onChange}
       max={max}
+      required // Removes "clear field" X icon on Firefox
     ></input>
   );
 };
